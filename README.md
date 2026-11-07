@@ -1,4 +1,4 @@
-# Tarea: Arreglos y Matrices en C#
+# Arreglos y Matrices en C#
 
 Ejercicios desarrollados en C# sobre arreglos unidimensionales y matrices bidimensionales. 
 

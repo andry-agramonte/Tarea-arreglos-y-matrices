@@ -5,70 +5,105 @@ class Program
 {
     static void Main()
     {
-        // Crear un arreglo para almacenar las calificaciones
-        double[] notas = new double[10];
+        // Crear una matriz para guardar las calificaciones
+        double[,] notas = new double[4, 3];
 
-        double suma = 0;
+        string[] asignaturas = { "Matematicas", "Espanol", "Informatica" };
+
+        double suma;
         double promedio;
-        double mayor = 0;
-        double menor = 100;
+        double mejorPromedio = -1;
+        int mejorEstudiante = 0;
 
-        int aprobados = 0;
-        int reprobados = 0;
-
-        // Solicitar las calificaciones de los 10 estudiantes
-        for (int i = 0; i < notas.Length; i++)
+        // Solicitar las calificaciones de los estudiantes
+        for (int i = 0; i < 4; i++)
         {
-            Console.Write("Ingrese la calificacion del estudiante " + (i + 1) + ": ");
-            notas[i] = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("\nEstudiante " + (i + 1));
 
-            // Validar que la nota este entre 0 y 100
-            while (notas[i] < 0 || notas[i] > 100)
+            for (int j = 0; j < 3; j++)
             {
-                Console.Write("Nota invalida. Ingrese una nota entre 0 y 100: ");
-                notas[i] = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Ingrese la nota de " + asignaturas[j] + ": ");
+                notas[i, j] = Convert.ToDouble(Console.ReadLine());
+
+                // Validar que la nota este entre 0 y 100
+                while (notas[i, j] < 0 || notas[i, j] > 100)
+                {
+                    Console.Write("Nota invalida. Ingrese una nota entre 0 y 100: ");
+                    notas[i, j] = Convert.ToDouble(Console.ReadLine());
+                }
+            }
+        }
+
+        // Mostrar la matriz completa
+        Console.WriteLine("\n--- MATRIZ DE CALIFICACIONES ---");
+
+        Console.WriteLine("Estudiante\tMatematicas\tEspanol\tInformatica");
+
+        for (int i = 0; i < 4; i++)
+        {
+            Console.Write("Estudiante " + (i + 1) + "\t");
+
+            for (int j = 0; j < 3; j++)
+            {
+                Console.Write(notas[i, j] + "\t\t");
             }
 
-            suma += notas[i];
+            Console.WriteLine();
+        }
 
-            if (notas[i] > mayor)
+        // Calcular el promedio de cada estudiante
+        Console.WriteLine("\n--- PROMEDIO POR ESTUDIANTE ---");
+
+        for (int i = 0; i < 4; i++)
+        {
+            suma = 0;
+
+            for (int j = 0; j < 3; j++)
             {
-                mayor = notas[i];
+                suma += notas[i, j];
             }
 
-            if (notas[i] < menor)
+            promedio = suma / 3;
+
+            Console.WriteLine("Estudiante " + (i + 1) + ": " + promedio);
+
+            if (promedio > mejorPromedio)
             {
-                menor = notas[i];
+                mejorPromedio = promedio;
+                mejorEstudiante = i + 1;
             }
 
-            if (notas[i] >= 70)
+            if (promedio >= 70)
             {
-                aprobados++;
+                Console.WriteLine("Estado: Aprobado");
             }
             else
             {
-                reprobados++;
+                Console.WriteLine("Estado: Reprobado");
             }
         }
 
-        // Calcular el promedio general
-        promedio = suma / notas.Length;
+        // Calcular el promedio de cada asignatura
+        Console.WriteLine("\n--- PROMEDIO POR ASIGNATURA ---");
 
-        // Mostrar todas las calificaciones
-        Console.WriteLine("\n--- CALIFICACIONES REGISTRADAS ---");
-
-        for (int i = 0; i < notas.Length; i++)
+        for (int j = 0; j < 3; j++)
         {
-            Console.WriteLine("Estudiante " + (i + 1) + ": " + notas[i]);
+            suma = 0;
+
+            for (int i = 0; i < 4; i++)
+            {
+                suma += notas[i, j];
+            }
+
+            promedio = suma / 4;
+
+            Console.WriteLine(asignaturas[j] + ": " + promedio);
         }
 
-        // Mostrar los resultados
-        Console.WriteLine("\n--- REPORTE GENERAL ---");
-        Console.WriteLine("Promedio general: " + promedio);
-        Console.WriteLine("Calificacion mas alta: " + mayor);
-        Console.WriteLine("Calificacion mas baja: " + menor);
-        Console.WriteLine("Estudiantes aprobados: " + aprobados);
-        Console.WriteLine("Estudiantes reprobados: " + reprobados);
+        // Mostrar el estudiante con mejor rendimiento
+        Console.WriteLine("\n--- MEJOR RENDIMIENTO ACADEMICO ---");
+        Console.WriteLine("Estudiante con mejor promedio: " + mejorEstudiante);
+        Console.WriteLine("Promedio: " + mejorPromedio);
 
         Console.ReadKey();
     }
